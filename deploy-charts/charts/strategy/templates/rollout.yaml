@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: test-argo-app-rollout
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: test-argo-app
+  workloadRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-argo-app-deployment
+  strategy:
+    canary:
+      canaryService: test-argo-app-canary-service
+      # Reference to a service which the controller will update to select
+      # stable pods. Required for traffic routing.
+      stableService: test-argo-app-service
+      trafficRouting:
+        nginx:
+          stableIngress: test-argo-app-ingress
+          additionalIngressAnnotations:
+            canary-weight: "30"   # optional
+      steps:
+        - setWeight: 20
+        - pause: {}
+        - setWeight: 50
+        - pause: {}
+        - setWeight: 80
+        - pause: {}

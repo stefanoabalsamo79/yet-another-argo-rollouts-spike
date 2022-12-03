@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-argo-app-canary-service
+spec:
+  type: ClusterIP
+  selector:
+    app: test-argo-app
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+    name: http
+  sessionAffinity: None

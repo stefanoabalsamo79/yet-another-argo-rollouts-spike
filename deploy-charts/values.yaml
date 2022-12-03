@@ -1,0 +1,19 @@
+k8s:
+  engine: kind # minikube | kind | gcp | etc
+
+clusterName:
+  test-cluster
+  
+deployemntReleaseName:
+  test-argo-app-release
+
+argoRolloutsReleaseName:
+  test-argo-rollouts-release
+
+argoRolloutsNamespace:
+  argo-rollouts
+
+deployment:
+  app: 
+    name: test-argo-app
+    tag: 1.0.6
