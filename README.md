@@ -340,13 +340,13 @@ spec:
 ```
 
 
-Let's check if the application just deployed is up:
+### Let's check if the application just deployed is up
 ```bash
 watch -n 1 curl localhost
 ```
 ![image_001](./images_and_diagrams/image_001.gif)
 
-Now let's migrate our `Deployment` to a `Rollout` and check it out afterwards
+### Now let's migrate our `Deployment` to a `Rollout` and check it out afterwards
 ```bash
 make rollout_install
 ```
@@ -358,7 +358,7 @@ get rollout test-argo-app-rollout \
 ![image_002](./images_and_diagrams/image_002.png)
 
 
-After that let's modify our deployment in order to trigger a new revision.
+### After that let's modify our deployment in order to trigger a new revision
  [`deploy-charts/charts/deployment/templates/deployment.yaml`](deploy-charts/charts/deployment/templates/deployment.yaml) 
 ```yaml
 ...
@@ -379,7 +379,7 @@ After that let's modify our deployment in order to trigger a new revision.
 ...
 ```
 
-Before applying let's modify [`deploy-charts/charts/deployment/values.yaml`](deploy-charts/charts/deployment/values.yaml) and in particular the number of replica in order to prevent from reinstating the original deployment's pods.
+### Before applying let's modify [`deploy-charts/charts/deployment/values.yaml`](deploy-charts/charts/deployment/values.yaml) and in particular the number of replica in order to prevent from reinstating the original deployment's pods which would be incorrect in essence
 ```yaml
 deployment:
   replicas: 0
