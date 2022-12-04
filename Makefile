@@ -126,7 +126,7 @@ rollout_manifest:
 	$(HELM) template --debug \
 	-f deploy-charts/values.yaml \
 	--set 'strategy.enabled=true' \
-	--set 'deployment.enabled=true' \
+	--set 'deployment.enabled=false' \
 	deploy-charts	
 
 rollout_install: 

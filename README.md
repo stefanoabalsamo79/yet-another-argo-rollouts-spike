@@ -12,10 +12,9 @@
 
 ---
 
-This is meant to have a close look at the scenario where we have to migrate towards argo rollouts but instead of converting a `Deployment` to a `Rollout`, we just reference the `Deployment` within the `Rollout`.
+This is meant to have a close look at the scenario where we have to migrate towards [`Argo Rollouts`](https://argoproj.github.io/argo-rollouts/) but instead of converting a `Deployment` to a `Rollout`, we just reference the `Deployment` within the `Rollout`.
 
 In this repository is it possible to use different k8s such as [`minikube`](https://minikube.sigs.k8s.io/docs/), [`kind`](https://kind.sigs.k8s.io/), etc even though at the moment I tested properly only the `kind` one.
-
 
 ### Repository structure
 

@@ -17,3 +17,8 @@ deployment:
   app: 
     name: test-argo-app
     tag: 1.0.6
+
+strategy:
+  app: 
+    name: test-argo-app
+    tag: 1.0.6

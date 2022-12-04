@@ -1,31 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: test-argo-app-rollout
+  name: {{ .Values.app.name }}-rollout
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: test-argo-app
+      app: {{ .Values.app.name }}
   workloadRef: 
     apiVersion: apps/v1
     kind: Deployment
-    name: test-argo-app-deployment
+    name: {{ .Values.app.name }}-deployment
   strategy:
     canary:
-      canaryService: test-argo-app-canary-service
-      # Reference to a service which the controller will update to select
-      # stable pods. Required for traffic routing.
-      stableService: test-argo-app-service
+      dynamicStableScale: true
+      canaryService: {{ .Values.app.name }}-canary-service
+      stableService: {{ .Values.app.name }}-service
       trafficRouting:
         nginx:
-          stableIngress: test-argo-app-ingress
+          stableIngress: {{ .Values.app.name }}-ingress
           additionalIngressAnnotations:
-            canary-weight: "30"   # optional
+            canary-weight: "30"
       steps:
-        - setWeight: 20
-        - pause: {}
-        - setWeight: 50
-        - pause: {}
-        - setWeight: 80
-        - pause: {}
+      {{- range .Values.canary.steps }}
+        - {{ . | toYaml }}
+      {{- end }}
