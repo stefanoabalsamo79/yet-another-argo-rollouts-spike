@@ -110,7 +110,7 @@ deployment_scale_down:
 	--replicas 0
 
 deployment_uninstall:
-	$(HELM) helm uninstall $(RELEASE_NAME) 
+	$(HELM) uninstall $(DEPLOYMENT_RELEASE_NAME) 
 
 argo_rollouts_controller_install: 
 	$(KUBECTL) apply \
