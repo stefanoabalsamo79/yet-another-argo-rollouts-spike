@@ -103,6 +103,16 @@ deployment_install:
 	--set 'strategy.enabled=false' \
 	$(DEPLOYMENT_RELEASE_NAME) ./deploy-charts
 
+deployment_update:
+	$(HELM) upgrade --install \
+	--debug \
+	-n $(DEPLOY_NAMESPACE) \
+	-f deploy-charts/values.yaml \
+	--set 'deployment.enabled=true' \
+	--set 'deployment.deployment.replicas=0' \
+	--set 'strategy.enabled=false' \
+	$(DEPLOYMENT_RELEASE_NAME) ./deploy-charts
+
 deployment_scale_down: 
 	$(KUBECTL) scale \
 	deployment $(DEPLOYMENT_NAME) \
