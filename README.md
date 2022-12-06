@@ -378,7 +378,7 @@ get rollout test-argo-app-rollout \
 ...
 ```
 
-### Before applying let's modify [`deploy-charts/charts/deployment/values.yaml`](deploy-charts/charts/deployment/values.yaml) and in particular the number of replica in order to prevent from reinstating the original deployment's pods which would be incorrect in essence
+### Before applying let's modify [`deploy-charts/charts/deployment/values.yaml`](deploy-charts/charts/deployment/values.yaml) and in particular the number of replica in order to prevent from reinstating the original deployment's pods which would be incorrect in essence [keep reading :-)]
 ```yaml
 deployment:
   replicas: 0
@@ -387,6 +387,32 @@ deployment:
 
 ```bash
 make deployment_install
+```
+### or better yet I created a specific `make` target which will perform helm install but passing the replicas param in order to keep deployment's pods to zero (i.e.`--set 'deployment.deployment.replicas=0'`)
+
+```bash
+make deployment_update
+```
+
+```makefile
+deployment_install:
+	$(HELM) upgrade --install \
+	--debug \
+	-n $(DEPLOY_NAMESPACE) \
+	-f deploy-charts/values.yaml \
+	--set 'deployment.enabled=true' \
+	--set 'strategy.enabled=false' \
+	$(DEPLOYMENT_RELEASE_NAME) ./deploy-charts
+
+deployment_update:
+	$(HELM) upgrade --install \
+	--debug \
+	-n $(DEPLOY_NAMESPACE) \
+	-f deploy-charts/values.yaml \
+	--set 'deployment.enabled=true' \
+	--set 'deployment.deployment.replicas=0' \
+	--set 'strategy.enabled=false' \
+	$(DEPLOYMENT_RELEASE_NAME) ./deploy-charts
 ```
 
 ![image_003](./images_and_diagrams/image_003.gif)
